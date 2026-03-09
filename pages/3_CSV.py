@@ -17,8 +17,24 @@ st.subheader("Tu resultado:")
 st.write("**Datos desde archivo local:**")
 # ESTUDIANTE: Escribe tu código a continuación para el CSV local
 
+st.write("**Datos desde archivo local:**")
 
-st.write("**Datos desde internet:**")
-# ESTUDIANTE: Escribe tu código a continuación para el CSV de internet
+try:
+    df_local = pd.read_csv("calificaciones.csv")
+    st.dataframe(df_local)
+except FileNotFoundError:
+    st.warning("Archivo 'calificaciones.csv' no encontrado. Créalo con al menos 3 filas de calificaciones.")
+except Exception as e:
+    st.error(f"Error: {e}")
 
 
+# ────────────────────────────────────────────────
+
+st.write("**Datos desde internet (Pingüinos de Palmer):**")
+
+try:
+    url = "https://raw.githubusercontent.com/allisonhorst/palmerpenguins/master/inst/extdata/penguins.csv"
+    df_internet = pd.read_csv(url)
+    st.dataframe(df_internet.head(10))
+except Exception as e:
+    st.error(f"No se pudo cargar el CSV desde internet: {e}")

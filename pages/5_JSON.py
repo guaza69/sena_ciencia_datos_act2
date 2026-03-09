@@ -16,5 +16,26 @@ JSON es el formato preferido en el desarrollo web para intercambiar información
 st.subheader("Tu resultado:")
 # ESTUDIANTE: Escribe tu código a continuación
 
+import json
 
-# st.dataframe(...)
+try:
+    # Opción 1: La más simple y directa (recomendada para este ejercicio)
+    df_json = pd.read_json("catalogo_juegos.json")
+    
+    # Mostramos el DataFrame
+    st.dataframe(df_json)
+    
+except FileNotFoundError:
+    st.error("No se encontró el archivo 'catalogo_juegos.json'. Créalo en la misma carpeta del proyecto con al menos 3 videojuegos.")
+except ValueError:
+    st.error("El archivo JSON tiene un formato incorrecto. Verifica que sea una lista de objetos (diccionarios).")
+except Exception as e:
+    st.error(f"Error al leer el archivo JSON: {e}")
+
+# Opcional: mostrar también la forma alternativa con json.load (muy útil para entender)
+st.markdown("**Forma alternativa usando json.load (solo referencia):**")
+st.code("""
+with open("catalogo_juegos.json", "r", encoding="utf-8") as f:
+    data = json.load(f)
+df_json = pd.DataFrame(data)
+""", language="python")

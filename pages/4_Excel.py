@@ -18,5 +18,20 @@ st.info("💡 Nota: Asegúrate de tener el archivo Excel en la misma ruta antes 
 st.subheader("Tu resultado:")
 # ESTUDIANTE: Escribe tu código a continuación
 
-
-# st.dataframe(...)
+try:
+    # Carga el archivo Excel que creaste manualmente
+    df_excel = pd.read_excel("reporte_financiero.xlsx")
+    
+    # Mostramos la tabla completa (como pide el ejercicio)
+    st.dataframe(df_excel)
+    
+    # Opcional pero recomendado: mostramos información básica del DataFrame
+    st.write("Información del DataFrame (tipos de datos y valores nulos):")
+    st.write(df_excel.info())
+    
+except FileNotFoundError:
+    st.error("No se encontró el archivo 'reporte_financiero.xlsx'. Crea el archivo en la misma carpeta del proyecto.")
+except ImportError:
+    st.error("Falta la librería openpyxl. Instálala con: pip install openpyxl")
+except Exception as e:
+    st.error(f"Error al leer el archivo Excel: {e}")
